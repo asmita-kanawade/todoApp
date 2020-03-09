@@ -42,11 +42,10 @@ app.post("/", async (req, res) => {
   }
 });
 
-
-//------ update todo --------
 app.route("/edit/:id").get((req, res) => {
     const id = req.params.id;
-    TodoList.find({}, (err, tasks) => {
+    
+    TodoList.find({}, null, { sort: {date: -1} }, (err, tasks) => {
       res.render("editTodo.ejs", { todoTasks: tasks, idTask: id });
     });
   })

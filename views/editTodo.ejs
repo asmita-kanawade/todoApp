@@ -38,6 +38,7 @@
     border-radius: 5px;
     height: 34px;
     font-family: "Candal", sans-serif;
+    padding-left: 10px;
   }
   .todo-header button {
     color: white;
@@ -48,6 +49,9 @@
   }
   .todo-container ul {
     list-style: none;
+  }
+  .todo-container ul.todo-list {
+    padding-left: 10px;
   }
   .todo-list-item {
     padding: 10px;
@@ -70,7 +74,8 @@
     border-radius: 5px;
     font-family: "Candal", sans-serif;
   }
-  .todo-list-item button {
+
+  .todo-list-item button,a {
     color: white;
     border: none;
     border-radius: 5px;
@@ -89,49 +94,60 @@
     font-family: "Candal", sans-serif;
     background-color: rgb(223, 43, 43);
     margin-left: 5px;
+    text-decoration: none;
   }
   .todo-list-item div {
     flex-grow: 2;
   }
   .todo-list-item .edit {
     padding-top: 2px;
+    padding-right: 6px;
     cursor: pointer;
     padding-left: 4px;
     background-color: orange;
     color: white;
     padding: top;
     font-size: 12px;
-    margin-right: 3px;
+    margin-right: 4px;
+    width: 43px;
+    font-size: 14px;
+    text-decoration: none;
 }
   .todo-list-item .remove {
     padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 6px;
     cursor: pointer;
     padding-left: 4px;
-    padding-right: 4px;
-    height: 19px;
-    width: 17px;
     background-color: red;
     color: white;
     padding: top;
     font-size: 12px;
+    margin-right: 4px;
+    width: 43px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .todo-list-item input.editTask {
+   padding-left: 5px;
   }
   
   
   </style>
 </head>
-<body>
+<body id="body">
   <div class="todo-container">
     <h2>To-Do List</h2>
     <div class="todo">
       <form action="" method="POST" class="todo-header">
-        <input type="text" name="content" />
-        <button type="submit"><span class="fas fa-plus"></span></button>
+        <input type="text" name="content" placeholder="Add new task"/>
+        <button type="submit">ADD</button>
       </form>
       <ul class="todo-list">
         <% todoTasks.forEach(details => { %> <% if (details._id == idTask) { %>
         <li class="todo-list-item">
           <form action="/edit/<%= details._id %>" method="POST">
-            <input type="text" value="<%= details.content %>" name="content" />
+            <input type="text" value="<%= details.content %>" name="content" class="editTask" />
             <button type="submit">Update</button>
             <a href="/" class="cancel">Cancel</a>
           </form>
@@ -140,10 +156,10 @@
         <li class="todo-list-item">
           <div class="todo-list-item-name"><%= details.content %></div>
           <a href="/edit/<%= details._id %>" class="edit">
-            <span class="fas fa-edit"></span>
+            Update
           </a>
           <a href="/remove/<%= details._id %>" class="remove">
-            <span class="fas fa-times"></span>
+            Cancel
           </a>
         </li>
         <% } %> <% }) %>

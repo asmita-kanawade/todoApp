@@ -16,9 +16,9 @@
   .todo-container {
     color: white;
     position: absolute;
-    top: 71%;
+    top: 58%;
     left: 72%;
-    padding: 20px;
+    padding: 15px;
     width: 469px;
     transform: translate(-50%, -50%);
     background-image: url(https://previews.123rf.com/images/vkulieva/vkulieva1602/vkulieva160200007/52452427-seamless-pattern-for-todo-list-universal-background.jpg);
@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 10%;
   }
   .todo {
     width: 400px;
@@ -43,6 +44,7 @@
     border-radius: 5px;
     height: 34px;
     font-family: "Candal", sans-serif;
+    padding: 10px;
   }
   .todo-header button {
     color: white;
@@ -75,7 +77,7 @@
     border-radius: 5px;
     font-family: "Candal", sans-serif;
   }
-  .todo-list-item button {
+  .todo-list-item button,a {
     color: white;
     border: none;
     border-radius: 5px;
@@ -94,33 +96,39 @@
     font-family: "Candal", sans-serif;
     background-color: rgb(223, 43, 43);
     margin-left: 5px;
+    text-decoration: none;
   }
   .todo-list-item div {
     flex-grow: 2;
   }
   .todo-list-item .edit {
-    padding-top: 2px;
     cursor: pointer;
-    padding-left: 4px;
     background-color: orange;
     color: white;
-    padding: top;
     font-size: 12px;
     margin-right: 3px;
+    text-decoration: none;
 }
   .todo-list-item .remove {
-    padding-top: 2px;
     cursor: pointer;
-    padding-left: 4px;
-    padding-right: 4px;
-    height: 19px;
-    width: 17px;
     background-color: red;
     color: white;
     padding: top;
     font-size: 12px;
+    text-decoration: none;
   }
-  
+  .todo-list-item input.checkbox{
+    flex-grow: 0;
+    margin-right: 15px;
+    height: 17px;
+    width: 20px;
+  }  
+  input[type=checkbox]:checked + label.strikethrough{
+  text-decoration: line-through;
+}
+.todo-list-item input[type=checkbox]:checked + label {
+    	background-color: #63a70a;
+    }
   
   </style>
 </head>
@@ -129,7 +137,7 @@
     <h2>To-Do List</h2>
     <div class="todo">
       <form action="/" method="POST" class="todo-header">
-        <input type="text" name="content" />
+        <input type="text" name="content" class="addTask"/>
         <button type="submit"><span class="fas fa-plus"></span>ADD</button>
       </form>
       <ul class="todo-list">
@@ -137,16 +145,17 @@
         <li class="todo-list-item">
           <div class="todo-list-item-name">
             <form action="/toggle-status/<%= details._id %>/<%= details.completed ? false : true %> " >
-              <input type="checkbox" id="check" name="check" onclick="this.form.submit()" <%= details.completed ? "checked" : "" %>/>
+           <input type="checkbox" id="check" name="check" class="checkbox" onclick="this.form.submit()" <%= details.completed ? "checked" : "" %>/>
+           <label class="strikethrough"><span class="todo-list-item-name"><%= details.content %></span></label>
             </form>
           </div>
 
-          <div class="todo-list-item-name"><%= details.content %></div>
+          <!-- <div class="todo-list-item-name"><%= details.content %></div> -->
 
           <a href="/edit/<%= details._id %>" class="edit">
             UPDATE
           </a>
-          <a href="/remove/<%= details._id %>" class="remove">X
+          <a href="/remove/<%= details._id %>" class="remove">DELETE
           </a>
         </li>
         <% }) %>
